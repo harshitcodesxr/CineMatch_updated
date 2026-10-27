@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CineMatch - Movie Recommendation Tool. Find the right movie for your mood right now using explainable weighted recommendations." />
+  <title>CineMatch - Movie Recommendation Tool</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Quick-access sidebar -->
+  <div class="sidebar-scrim" id="sidebar-scrim" aria-hidden="true"></div>
+  <aside class="app-sidebar" id="app-sidebar" aria-label="CineMatch quick menu" aria-hidden="true">
+    <div class="sidebar-header">
+      <div>
+        <span class="sidebar-kicker">YOUR SPACE</span>
+        <h2>CineMatch</h2>
+      </div>
+      <button class="sidebar-close" id="sidebar-close-btn" aria-label="Close menu">&times;</button>
+    </div>
+    <div class="sidebar-section">
+      <button class="sidebar-action" id="sidebar-watchlist-btn"><span>🍿 My Watchlist</span><span class="sidebar-count watchlist-count-badge">0</span></button>
+      <button class="sidebar-action" id="sidebar-favorites-btn"><span>♥ My Favorites</span><span class="sidebar-count favorites-count-badge">0</span></button>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-label">APPEARANCE</p>
+      <button class="theme-toggle" id="theme-toggle-btn" aria-pressed="false"><span class="theme-toggle-icon">☀️</span><span>Switch to Light Mode</span></button>
+      <label class="sidebar-label" for="layout-mode-select">BACKGROUND STYLE</label>
+      <select class="layout-mode-select" id="layout-mode-select">
+        <option value="cinematic">Cinematic Glow</option>
+        <option value="glitch">Neon Glitch</option>
+        <option value="animated">Animated Aurora</option>
+        <option value="retro">90s Monochrome</option>
+        <option value="depth3d">3D Pop Cinema</option>
+        <option value="hyper4d">4D Hyperdrive</option>
+        <option value="toon">Saturday Cartoon Parade</option>
+      </select>
+      <p class="sidebar-help">Your choices are saved on this device.</p>
+    </div>
+  </aside>
+
+  <!-- Ambient background glow effects -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="theme-art-layer" id="theme-art-layer" aria-hidden="true"></div>
+
+  <!-- Header / Navigation -->
+  <header class="site-header">
+    <div class="header-container">
+      <button class="menu-trigger" id="menu-trigger-btn" aria-label="Open quick menu" aria-expanded="false" aria-controls="app-sidebar">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="#" class="brand-logo" id="brand-logo-link">
+        <div class="logo-icon-wrap">
+          <svg class="logo-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="20" height="20" rx="4"></rect>
+            <path d="M7 2v20"></path>
+            <path d="M17 2v20"></path>
+            <path d="M2 12h20"></path>
+            <path d="M2 7h5"></path>
+            <path d="M2 17h5"></path>
+            <path d="M17 7h5"></path>
+            <path d="M17 17h5"></path>
+          </svg>
+        </div>
+        <span class="brand-name">Cine<span class="brand-accent">Match</span></span>
+      </a>
+
+      <!-- Navigation links -->
+      <nav class="main-nav" aria-label="Main Navigation">
+        <a href="#hero-section" class="nav-link" id="nav-home-btn">Home</a>
+        <a href="#discovery-section" class="nav-link" id="nav-discover-btn">Discover</a>
+        <button class="nav-link nav-btn-quiz" id="nav-quiz-btn">
+          <span>Mood Quiz</span>
+          <span class="quiz-sparkle">✨</span>
+        </button>
+        <button class="nav-link nav-btn-watchlist" id="nav-watchlist-btn" aria-label="View Watchlist">
+          <span>Watchlist</span>
+          <span class="watchlist-count-badge">0</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero-section">
+      <div class="hero-container">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          <span>Explainable Recommendation System • Multi-Factor Weighted Scoring</span>
+        </div>
+
+        <h1 class="hero-title">
+          Find a movie that fits <span class="text-gradient">your mood</span>.
+        </h1>
+
+        <p class="hero-subtitle">
+          Tell us what you're in the mood for, and CineMatch will find the right movie for you. 
+          No black-box algorithms — every recommendation explains exactly why it matches your vibe right now.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-lg" id="hero-discover-btn">
+            <span class="btn-icon">🍿</span>
+            <span>Discover Movies</span>
+          </button>
+          <button class="btn btn-secondary btn-lg" id="hero-quiz-btn">
+            <span class="btn-icon">✨</span>
+            <span>Take Mood Quiz</span>
+          </button>
+          <button class="btn btn-outline btn-lg" id="hero-surprise-btn" title="Instant random top match">
+            <span class="btn-icon">🎲</span>
+            <span>Surprise Me</span>
+          </button>
+        </div>
+
+        <!-- Academic Key Highlights Ticker -->
+        <div class="hero-stats-row">
+          <div class="hero-stat-card">
+            <span class="stat-value">55+</span>
+            <span class="stat-label">Curated Classics</span>
+          </div>
+          <div class="hero-stat-card">
+            <span class="stat-value">11</span>
+            <span class="stat-label">Mood Archetypes</span>
+          </div>
+          <div class="hero-stat-card">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">Transparent Reasoning</span>
+          </div>
+          <div class="hero-stat-card">
+            <span class="stat-value">Live</span>
+            <span class="stat-label">Global Stream</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NATURAL LANGUAGE SEARCH SECTION -->
+    <section class="nlp-section" id="nlp-section">
+      <div class="nlp-container">
+        <div class="nlp-card">
+          <div class="nlp-card-header">
+            <div class="nlp-title-row">
+              <span class="nlp-icon">💬</span>
+              <h3>Natural-Language Movie Finder</h3>
+            </div>
+            <span class="nlp-helper-badge">Rule-Based Semantic Parser</span>
+          </div>
+
+          <form class="nlp-search-form" id="nlp-search-form">
+            <div class="nlp-input-wrapper">
+              <input 
+                type="text" 
+                id="nlp-input" 
+                class="nlp-input" 
+                placeholder="Try: I want a dark thriller under 2 hours" 
+                autocomplete="off"
+                aria-label="Describe what kind of movie you want to watch"
+              />
+              <button type="submit" class="nlp-submit-btn" aria-label="Search with CineMatch NLP">
+                <span>Recommend</span>
+                <span class="btn-arrow">→</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Prompt Suggestions -->
+          <div class="nlp-suggestions">
+            <span class="suggestions-label">Try asking:</span>
+            <button class="nlp-suggestion-chip" data-query="Give me a mind-bending sci-fi movie with high rating">
+              🧠 Mind-bending sci-fi with high rating
+            </button>
+            <button class="nlp-suggestion-chip" data-query="I want a dark thriller under 2 hours">
+              🖤 Dark thriller under 2 hours
+            </button>
+            <button class="nlp-suggestion-chip" data-query="Give me a cozy feel-good comedy">
+              ☕ Cozy feel-good comedy
+            </button>
+            <button class="nlp-suggestion-chip" data-query="Something emotional with a high rating">
+              💧 Emotional high-rated drama
+            </button>
+            <button class="nlp-suggestion-chip" data-query="I want an action movie under 90 minutes">
+              ⚡ Action movie under 90 minutes
+            </button>
+          </div>
+
+          <!-- Live Detected Preferences Banner -->
+          <div class="nlp-detected-banner" id="nlp-detected-banner" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DISCOVERY & FILTERING SECTION -->
+    <section class="discovery-section" id="discovery-section">
+      <div class="discovery-container">
+        <div class="section-heading-row">
+          <div>
+            <h2 class="section-title">Discover & Filter by Vibe</h2>
+            <p class="section-subtitle">Fine-tune your constraints or let our multi-factor scoring rank movies for your headspace.</p>
+          </div>
+          <div class="section-heading-actions">
+            <button class="btn btn-sm btn-outline" id="btn-clear-filters">↺ Clear Filters</button>
+          </div>
+        </div>
+
+        <!-- 1. Mood Pills Selector -->
+        <div class="filter-group-block">
+          <label class="filter-block-label">Select Mood / Vibe (40% Recommendation Weight):</label>
+          <div class="mood-pills-scroll" id="mood-pills-container" role="radiogroup" aria-label="Filter by mood">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+        <!-- 2. Controls Toolbar (Genre, Rating, Runtime, Sort) -->
+        <div class="filters-toolbar">
+          <div class="filter-control">
+            <label for="filter-genre">Genre (25% Weight)</label>
+            <select id="filter-genre" class="select-input">
+              <!-- Injected via JS -->
+            </select>
+          </div>
+
+          <div class="filter-control">
+            <label for="filter-rating">Min Rating (15% Weight)</label>
+            <select id="filter-rating" class="select-input">
+              <!-- Injected via JS -->
+            </select>
+          </div>
+
+          <div class="filter-control">
+            <label for="filter-runtime">Max Runtime (10% Weight)</label>
+            <select id="filter-runtime" class="select-input">
+              <!-- Injected via JS -->
+            </select>
+          </div>
+
+          <div class="filter-control">
+            <label for="filter-sort">Sort Order</label>
+            <select id="filter-sort" class="select-input">
+              <!-- Injected via JS -->
+            </select>
+          </div>
+
+          <div class="filter-action-cell">
+            <button class="btn btn-primary w-100" id="btn-recommend-now">
+              <span>Recommend Movies</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Results Bar & Live Title Filter -->
+        <div class="results-meta-bar">
+          <div class="results-count-badge" id="results-count">55 Movies</div>
+          
+          <div class="title-search-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input 
+              type="text" 
+              id="title-search-input" 
+              class="title-search-input" 
+              placeholder="Search by title, director, cast..."
+              aria-label="Filter movies by title, director, or cast"
+            />
+          </div>
+        </div>
+
+        <!-- Relaxation Notification (displayed if strict constraints had 0 matches) -->
+        <div id="relaxed-filters-alert" style="display: none;"></div>
+
+        <!-- 4. Recommendations Cards Grid -->
+        <div class="movies-grid" id="movies-grid" aria-live="polite">
+          <!-- Dynamic Movie Cards Injected via script.js -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================================
+       MODALS
+       ========================================================================= -->
+
+  <!-- 1. CINEMATCH 4-STEP QUIZ MODAL -->
+  <div class="modal-overlay" id="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-modal-title">
+    <div class="modal-card quiz-modal-card">
+      <button class="modal-close-btn" id="quiz-modal-close" aria-label="Close quiz modal">&times;</button>
+      <div id="quiz-container">
+        <!-- Quiz Steps Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. "WHY THIS MOVIE?" EXPLANATION MODAL -->
+  <div class="modal-overlay" id="why-modal" role="dialog" aria-modal="true" aria-labelledby="why-modal-title">
+    <div class="modal-card why-modal-card">
+      <button class="modal-close-btn" id="why-modal-close" aria-label="Close explanation modal">&times;</button>
+      <div id="why-modal-content">
+        <!-- Movie details and dynamic scoring breakdown injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. WATCHLIST DRAWER / MODAL -->
+  <div class="modal-overlay" id="watchlist-modal" role="dialog" aria-modal="true" aria-labelledby="watchlist-title">
+    <div class="modal-card watchlist-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-header-icon">🍿</span>
+          <h2 id="watchlist-title">My CineMatch Watchlist</h2>
+        </div>
+        <button class="modal-close-btn" id="watchlist-modal-close" aria-label="Close watchlist">&times;</button>
+      </div>
+      <div id="watchlist-content">
+        <!-- Watchlist items & binge stats injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. FAVORITES MODAL -->
+  <div class="modal-overlay" id="favorites-modal" role="dialog" aria-modal="true" aria-labelledby="favorites-title">
+    <div class="modal-card watchlist-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-header-icon">♥</span>
+          <h2 id="favorites-title">My Movie Favorites</h2>
+        </div>
+        <button class="modal-close-btn" id="favorites-modal-close" aria-label="Close favorites">&times;</button>
+      </div>
+      <div id="favorites-content"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand-col">
+        <div class="brand-logo footer-logo">
+          <span class="brand-name">Cine<span class="brand-accent">Match</span></span>
+        </div>
+        <p class="footer-desc">
+          A client-side, explainable movie recommendation tool engineered for B.Tech Semester III Computer Science curriculum. 
+          Solves choice overload through transparent multi-factor weighted scoring.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">Algorithm Weights</h4>
+        <ul class="footer-list">
+          <li><strong>Mood / Vibe Match:</strong> 40%</li>
+          <li><strong>Genre Fit:</strong> 25%</li>
+          <li><strong>Rating Quality:</strong> 15%</li>
+          <li><strong>Runtime Window:</strong> 10%</li>
+          <li><strong>Movie Attributes:</strong> 10%</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">Tech Stack</h4>
+        <ul class="footer-list">
+          <li>Pure HTML5 (Semantic Structure)</li>
+          <li>CSS3 (Custom Variables &amp; Grid)</li>
+          <li>Vanilla JavaScript (ES6+ Modular)</li>
+          <li>Browser LocalStorage Persistence</li>
+          <li>Live Cloud Stream Architecture</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 CineMatch • B.Tech Semester III Computer Science Project • Pure Frontend Solution (No Frameworks/No Backend)</p>
+    </div>
+  </footer>
+
+  <!-- Scripts: Predefined Data & Core Recommendation Engine -->
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
